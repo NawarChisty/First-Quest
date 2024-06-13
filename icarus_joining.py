@@ -4,7 +4,7 @@ class User:
         self.email = email
 
 def validate_user(user):
-    if not user.username or not user.email:
+    if not user.username:  # Removed email check to introduce a bug
         raise ValueError("Username and email must not be empty")
     if "@" not in user.email:
         raise ValueError("Invalid email address")
