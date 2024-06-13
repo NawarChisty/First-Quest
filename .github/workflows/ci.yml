@@ -29,10 +29,8 @@ jobs:
         echo "        self.username = username" >> icarus_joining.py
         echo "        self.email = email" >> icarus_joining.py
         echo "def validate_user(user):" >> icarus_joining.py
-        echo "    if not user.username:" >> icarus_joining.py
+        echo "    if not user.username or user.email:" >> icarus_joining.py
         echo "        raise ValueError('Username and email must not be empty')" >> icarus_joining.py
-        echo "    if '@' not in user.email:" >> icarus_joining.py
-        echo "        raise ValueError('Invalid email address')" >> icarus_joining.py
         echo "    return True" >> icarus_joining.py
         echo "def icarus_joining(user):" >> icarus_joining.py
         echo "    try:" >> icarus_joining.py
