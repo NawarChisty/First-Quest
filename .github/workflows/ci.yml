@@ -10,21 +10,49 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Use Windows environment
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.12'
-
-    - name: Install dependencies
+      
+    - name: Copy icarus_joining.py
       run: |
-        python -m pip install --upgrade pip
-        pip install pytest
+        echo "Creating icarus_joining.py file"
+        echo "class User:" > icarus_joining.py
+        echo "    def __init__(self, username, email):" >> icarus_joining.py
+        echo "        self.username = username" >> icarus_joining.py
+        echo "        self.email = email" >> icarus_joining.py
+        echo "def validate_user(user):" >> icarus_joining.py
+        echo "    if not user.username or not user.email:" >> icarus_joining.py
+        echo "        raise ValueError('Username and email must not be empty')" >> icarus_joining.py
+        echo "    if '@' not in user.email:" >> icarus_joining.py
+        echo "        raise ValueError('Invalid email address')" >> icarus_joining.py
+        echo "    return True" >> icarus_joining.py
+        echo "def icarus_joining(user):" >> icarus_joining.py
+        echo "    try:" >> icarus_joining.py
+        echo "        if validate_user(user):" >> icarus_joining.py
+        echo "            return 'User joined successfully'" >> icarus_joining.py
+        echo "    except ValueError as e:" >> icarus_joining.py
+        echo "        return str(e)" >> icarus_joining.py
+
+    - name: Copy test_icarus_joining.py
+      run: |
+        echo "Creating test_icarus_joining.py file"
+        echo "import pytest" > test_icarus_joining.py
+        echo "from icarus_joining import User, icarus_joining" >> test_icarus_joining.py
+        echo "def test_icarus_joining_success():" >> test_icarus_joining.py
+        echo "    user = User(username='icarus', email='icarus@example.com')" >> test_icarus_joining.py
+        echo "    result = icarus_joining(user)" >> test_icarus_joining.py
+        echo "    assert result == 'User joined successfully'" >> test_icarus_joining.py
+        echo "def test_icarus_joining_missing_username():" >> test_icarus_joining.py
+        echo "    user = User(username='', email='icarus@example.com')" >> test_icarus_joining.py
+        echo "    result = icarus_joining(user)" >> test_icarus_joining.py
+        echo "    assert result == 'Username and email must not be empty'" >> test_icarus_joining.py
+        echo "def test_icarus_joining_invalid_email():" >> test_icarus_joining.py
+        echo "    user = User(username='icarus', email='icarus_at_example.com')" >> test_icarus_joining.py
+        echo "    result = icarus_joining(user)" >> test_icarus_joining.py
+        echo "    assert result == 'Invalid email address'" >> test_icarus_joining.py
 
     - name: Run tests
       run: |
