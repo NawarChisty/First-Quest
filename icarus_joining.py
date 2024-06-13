@@ -6,8 +6,8 @@ class User:
 def validate_user(user):
     if not user.username or not user.email:
         raise ValueError("Username and email must not be empty")
-    #if "@" not in user.email:
-        #raise ValueError("Invalid email address")
+    if "@" not in user.email:
+        raise ValueError("Invalid email address")
     return True
 
 def icarus_joining(user):
